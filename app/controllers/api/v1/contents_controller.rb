@@ -1,6 +1,7 @@
 class Api::V1::ContentsController < ApplicationController
   before_action :authenticate_request!
   before_action :set_content, only: [:update, :destroy]
+  before_action :authorize_user!, only: [:update, :destroy]
 
   def index
     render jsonapi: Content.all, status: :ok
@@ -11,7 +12,7 @@ class Api::V1::ContentsController < ApplicationController
     if @content.save
       render jsonapi: @content, status: :created
     else
-      render jsonapi_errors: @content.errors, status: unprocessable_entity
+      render jsonapi_errors: @content.errors, status: :unprocessable_entity
     end
   end
 
@@ -19,7 +20,7 @@ class Api::V1::ContentsController < ApplicationController
     if @content.update(content_params)
       render jsonapi: @content, status: :ok
     else
-      render jsonapi_errors: @content.errors, status: unprocessable_entity
+      render jsonapi_errors: @content.errors, status: :unprocessable_entity
     end
   end
 
@@ -27,7 +28,7 @@ class Api::V1::ContentsController < ApplicationController
     if @content.destroy
       render json: { message: 'Deleted' }
     else
-      render jsonapi_errors: @content.errors, status: unprocessable_entity
+      render jsonapi_errors: @content.errors, status: :unprocessable_entity
     end
   end
 
@@ -39,5 +40,11 @@ class Api::V1::ContentsController < ApplicationController
 
   def content_params
     params.permit(:title, :body)
+  end
+
+  def authorize_user!
+    unless @content.user == current_user
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+    end
   end
 end
