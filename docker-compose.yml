@@ -1,0 +1,53 @@
+version: '3'
+services:
+  db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: AS_Backend_development
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    profiles:
+      - stage
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+  as_backend_api:
+    build: .
+    restart: always
+    environment:
+      RAILS_ENV: development
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: AS_Backend_development
+      DB_HOST: db
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    profiles:
+      - stage
+
+  test_db:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: AS_Backend_test
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    profiles:
+      - rspec
+  test_as_backend:
+    build: .
+    environment:
+      RAILS_ENV: test
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_NAME: AS_Backend_test
+      DB_HOST: test_db
+    depends_on:
+      - test_db
+    profiles:
+      - rspec
+
+volumes:
+  pg_data:
