@@ -1,24 +1,14 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby version: 3.1.2
+* Rails version: 7.0.8
 
-Things you may want to cover:
+  #Features
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  * Custom Authentication using jwt
+  * **User**: Sign in, Sign Up, Change password
+  * **Content**: CRUD operation of contents
+  * **Association**: User has_many Contents and Content belongs_to one User
+  * **Rspecs**: Model and Controller rspecs. **Gems Used**: rspec-rails, factory_bot_rails, faker, shoulda-matchers
+  * **Serialization**: Serialized JSON according to the requirements. **Gems Used**: jsonapi-serializer, jsonapi.rb
+    
