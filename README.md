@@ -39,5 +39,5 @@
   - **Step 2**: `docker compose --profile stage up`
     - This runs the services. If you are running for the first time you can skip Step 1 and directly follow Step 2.
   - **Step 3**: Test the APIs using this Postman collection. **[Link To Postman Collection](https://www.postman.com/solar-escape-848590/workspace/assessment/collection/17707547-58460d14-61a5-4ae3-9444-a8e97555e3d7?action=share&creator=17707547&active-environment=17707547-d38a0fd1-6ce0-4a7d-98c8-357b6c9004be)**
-  - **Step 4**: `docker compose --profile rspec down`
+  - **Step 4**: `docker compose --profile stage down`
     - This stops the services
